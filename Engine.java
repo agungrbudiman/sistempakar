@@ -27,7 +27,7 @@ public class Engine {
         System.out.println ("------------------------------\nSistem Pakar Rekomendasi Mobil\n------------------------------");
         sc = new Scanner(System.in);
         for (int i = 2; i < 9; i++) { //loop untuk setiap spesifikasi
-            chRules(i);
+            checkRules(i);
             if(rules.size() == 1) { //Jika rules tinggal satu maka sudah ketemu goalnya, tidak perlu cari fakta lain
                 break;
             }
@@ -39,14 +39,14 @@ public class Engine {
         sc.close();
     }
 
-    private void rmRules(String fact, int i) {
+    private void filterRules(String fact, int i) {
         rules = rules.stream().filter(r -> r[i].equals(fact)).collect(Collectors.toList()); //filter lalu ambil rules yang sesuai fakta
         // for (String[] r : rules) {
         //     System.out.println(r[0]);
         // }
     }
     
-    private void chRules(int i) {
+    private void checkRules(int i) {
         List<String> v = new ArrayList<>();
         for (String[] r : rules) {
             v.add(r[i]);
@@ -54,7 +54,7 @@ public class Engine {
         v = v.stream().distinct().sorted().collect(Collectors.toList());
         if (v.size() > 1) { //Perlu fakta baru jika minimal ada 2 pilihan value spesifikasi, jika tidak skip
             dialog(i, v);
-            rmRules(sc.nextLine(), i);
+            filterRules(sc.nextLine(), i);
         }
         // System.out.print(v.toString());
     }
@@ -98,7 +98,7 @@ public class Engine {
                         case 2 : System.out.println("2.Lumayan, mesin masih 3 silinder");break;
                         case 3 : System.out.println("3.Sedang, getaran halus karena sudah 4 silinder");break;
                         case 4 : System.out.println("4.Baik, getaran halus dan bantingan suspensi nyaman");break;
-                        case 5 : System.out.println("5.Sangat baik, getaran halus dan bantingan suspensi sangat nyaman");break;
+                        case 5 : System.out.println("5.Sangat baik, getaran halus dan kekedapan kabin baik");break;
                     }
                 }break;
             case 6 :
