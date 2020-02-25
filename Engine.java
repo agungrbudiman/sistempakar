@@ -26,11 +26,11 @@ public class Engine {
     public void inferenceEngine() {
         System.out.println ("------------------------------\nSistem Pakar Rekomendasi Mobil\n------------------------------");
         sc = new Scanner(System.in);
-        for (int i = 2; i < 9; i++) { //loop untuk setiap spesifikasi
+        for (int i = 2; i < 9; i++) { //loop untuk setiap fakta
             checkRules(i);
-            if(rules.size() == 1) { //Jika rules tinggal satu maka sudah ketemu goalnya, tidak perlu cari fakta lain
-                break;
-            }
+            // if(rules.size() == 1) { //Jika rules tinggal satu maka sudah ketemu goalnya, tidak perlu cari fakta lain
+            //     break;
+            // }
         }
         System.out.println("\n-----------\nRekomendasi\n-----------");
         for (String[] r : rules) { //Output goal
@@ -51,9 +51,10 @@ public class Engine {
         for (String[] r : rules) {
             v.add(r[i]);
         }
-        v = v.stream().distinct().sorted().collect(Collectors.toList());
+        v = v.stream().distinct().sorted().collect(Collectors.toList()); //hapus duplikasi di array v lalu sort
+        dialog(i, v);
         if (v.size() > 1) { //Perlu fakta baru jika minimal ada 2 pilihan value spesifikasi, jika tidak skip
-            dialog(i, v);
+            System.out.print("------------\nPilihan anda : ");
             filterRules(sc.nextLine(), i);
         }
         // System.out.print(v.toString());
@@ -66,10 +67,12 @@ public class Engine {
                 System.out.println ("------\nBudget\n------");
                 for (int j = 0; j < v.size(); j++) {
                     switch(Integer.parseInt(v.get(j))) {
-                        case 1 : System.out.println("1.Budget <= 150jt");break;
-                        case 2 : System.out.println("2.150jt < Budget <= 200jt");break;
-                        case 3 : System.out.println("3.200jt < Budget <= 250jt");break;
-                        case 4 : System.out.println("4.Budget > 250jt");break;
+                        case 1 : System.out.println("1.Budget <= 125jt");break;
+                        case 2 : System.out.println("2.125jt < Budget <= 150jt");break;
+                        case 3 : System.out.println("3.150jt < Budget <= 200jt");break;
+                        case 4 : System.out.println("4.200jt < Budget <= 225jt");break;
+                        case 5 : System.out.println("5.225jt < Budget <= 250jt");break;
+                        case 6 : System.out.println("6.Budget > 250jt");break;
                     }
                 }break;
             case 3 :
@@ -86,7 +89,7 @@ public class Engine {
                 for (int j = 0; j < v.size(); j++) {
                     switch(Integer.parseInt(v.get(j))) {
                         case 1 : System.out.println("1.Manual (M/T)");break;
-                        case 2 : System.out.println("2.Otomatis (A/T,CVT,AGS)");break;
+                        case 2 : System.out.println("2.Otomatis (A/T,CVT,AMT)");break;
                     }
                 }break;
             case 5 :
@@ -106,11 +109,11 @@ public class Engine {
                 for (int j = 0; j < v.size(); j++) {
                     switch(Integer.parseInt(v.get(j))) {
                         case 0 : System.out.println("0.Sangat buruk, tanpa Airbag dan ABS");break;
-                        case 1 : System.out.println("1.Buruk, Tanpa Airbag dan ABS");break;
-                        case 2 : System.out.println("2.Lumayan, 1 Airbag pengemudi saja tanpa ABS");break;
-                        case 3 : System.out.println("3.Sedang, Dual Airbag tanpa ABS");break;
+                        case 1 : System.out.println("1.Buruk, tanpa Airbag dan ABS");break;
+                        case 2 : System.out.println("2.Kurang, Single Airbag tanpa ABS");break;
+                        case 3 : System.out.println("3.Cukup, Dual Airbag tanpa ABS");break;
                         case 4 : System.out.println("4.Baik, Dual Airbag dengan ABS");break;
-                        case 5 : System.out.println("5.Sangat baik, dilengkapi stability control");break;
+                        case 5 : System.out.println("5.Sangat baik, Dual Airbag dengan ABS dan VSC");break;
                     }
                 }break;
             case 7 :
@@ -138,6 +141,5 @@ public class Engine {
                     }
                 }break;
         }
-        System.out.print("Pilihan anda : ");
     }
 }
