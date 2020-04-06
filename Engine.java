@@ -4,10 +4,10 @@ import java.util.stream.Collectors;
 
 public class Engine {
 
-    private List<String[]> rules;
-    private Scanner sc;
+    private static List<String[]> rules;
+    private static Scanner sc;
 
-    public void generateRules(String path) { //Baca file csv lalu simpan ke ArrayList
+    public static void generateRules(String path) { //Baca file csv lalu simpan ke ArrayList
         rules = new ArrayList<String[]>();
         try {
             Scanner scanner = new Scanner(new File(path));
@@ -23,7 +23,7 @@ public class Engine {
         }
     }
 
-    public void inferenceEngine() {
+    public static void inferenceEngine() {
         System.out.println ("------------------------------\nSistem Pakar Rekomendasi Mobil\n------------------------------");
         sc = new Scanner(System.in);
         for (int i = 2; i < 9; i++) { //loop untuk setiap fakta
@@ -39,14 +39,14 @@ public class Engine {
         sc.close();
     }
 
-    private void filterRules(String fact, int i) {
+    private static void filterRules(String fact, int i) {
         rules = rules.stream().filter(r -> r[i].equals(fact)).collect(Collectors.toList()); //filter lalu ambil rules yang sesuai fakta
         // for (String[] r : rules) {
         //     System.out.println(r[0]);
         // }
     }
     
-    private void checkRules(int i) {
+    private static void checkRules(int i) {
         List<String> v = new ArrayList<>();
         for (String[] r : rules) {
             v.add(r[i]);
@@ -60,7 +60,7 @@ public class Engine {
         // System.out.print(v.toString());
     }
 
-    private void dialog(int i, List<String> v) {
+    private static void dialog(int i, List<String> v) {
         
         switch(i) {
             case 2 :
